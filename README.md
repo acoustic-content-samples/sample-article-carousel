@@ -17,7 +17,7 @@ To call authenticated APIs, you need to first call the login service with the de
 
 The login call will return both a tenant ID and a tenant base URL in the response header. The tenant ID needs to be part of the URL for subsequent API calls. For example, the search service will have a URL like this:
 
-https://my.digitalexperience.ibm.com/api/[tenant ID]/authoring/v1/search
+https://my.digitalexperience.ibm.com/api/[tenantID]/authoring/v1/search
 
 Typically you will use the base URL from the x-ibm-dx-tenant-base-url header to construct the service URL with the tenant ID. This is what's done in the sample code. An alternative approach is to obtain the tenant ID from the Watson Content Hub user interface. Click on the "i" information icon at the top left next to where it says "IBM Watson Content Hub" and you will see your tenant ID.
 

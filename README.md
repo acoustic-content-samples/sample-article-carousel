@@ -78,7 +78,7 @@ If all goes well you should see a carousel looking something like this (dependin
 
 ###Resources
 
-API Explorer reference documentation: https://developer.ibm.com/api/list
+API Explorer reference documentation: https://developer.ibm.com/api/view/id-618
 
 Watson Content Hub developer center: https://developer.ibm.com/wch/
 

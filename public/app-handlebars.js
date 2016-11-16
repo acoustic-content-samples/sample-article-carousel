@@ -2,9 +2,9 @@
  * Copyright 2016  IBM Corp.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an 
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
 */
 "use strict";
@@ -46,39 +46,43 @@ function showContent(baseTenantUrl) {
     $.ajax(reqOptions).done(function(json) {
         // generate HTML for carousel indicators and items from the search result list
         var indicators = []; // carousel indicators
-        var innerItems = []; // the carousel items
+        var contentItems = []; // the carousel items
         $(json.documents).each(function(index, item) {
             // the entire content item is available in the "document" field as a JSON string, so we'll parse it.
-            var docJson = $.parseJSON(item.document); 
+            var docJson = $.parseJSON(item.document);
             // console.log('docJson: ', JSON.stringify(docJson));
             var elements = docJson.elements;
-            // for the first indicator and the first item, set the "active" class 
-            var activeClass = indicators.length == 0 ? ' class="active"' : '';
-            var activeItemClass = indicators.length == 0 ? ' class="item active"' : ' class="item"' ;
+            // for the first indicator and the first item, set the "active" class
+            var activeClass = indicators.length == 0 ? "active" : '';
+            var activeItemClass = indicators.length == 0 ? "item active" : "item";
             // Get several element values for display
             var imageResource = (elements.image.asset === undefined) ? "" : elements.image.asset.resourceUri ;
             var title = (elements.title === undefined) ? "" : elements.title.value ;
             var summary = (elements.summary === undefined) ? "" : elements.summary.value ;
             var author = (elements.author === undefined) ? "" : elements.author.value ;
             var publishDate = (elements.publishDate === undefined) ? "" : elements.publishDate.value ;
-            // generate the HTML for this content item
-            indicators.push('<li data-target="#articleCarousel" data-slide-to="0"' + activeClass + '></li>' );
-            innerItems.push(''
-                + '<div ' + activeItemClass + '>'
-                + '<img class="carousel-image" ' + 'src="' + baseTenantUrl + imageResource + '" ' + 'width="460" height="345">'
-                + '<div class="carousel-caption">'
-                + '<h1>' + title + '</h1>'
-                + '<p>' + summary + '</p>'
-                + '<h4>' + author + '</h5>'
-                + '</div>'
-                + '</div>'
-
-                );
+            // generate the context for the handlebars template for this content item
+            indicators.push( { "activeClass": activeClass} );
+            contentItems.push( {
+                "activeItemClass": activeItemClass,
+                "resourceURI": baseTenantUrl + imageResource,
+                "title": title,
+                "summary": summary,
+                "author":  author,
+                "publishDate": publishDate
+            } );
         });
 
-        // update the HTML elements for indicators and items
-        $("#articleCarouselIndicators").html(indicators);
-        $("#articleCarouselInner").html(innerItems);
+        // update HTML for indicators and items
+        var indicatorsScript = $("#indicatorsTemplate").html();
+        var indicatorsTemplate = Handlebars.compile(indicatorsScript);
+        var compiledIndicatorsHTML = indicatorsTemplate({indicators});
+        $("#articleCarouselIndicators").append(compiledIndicatorsHTML);
+
+        var innerDivScript = $("#innerDivTemplate").html();
+        var innerDivTemplate = Handlebars.compile(innerDivScript);
+        var compiledHTML = innerDivTemplate({contentItems});
+        $("#articleCarouselInner").append(compiledHTML);
     });
 }
 $(document).ready(function() {

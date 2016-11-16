@@ -29,11 +29,15 @@ Note that every API service operation has specific user roles that it can be use
 
 Since this sample will run from a different domain than Watson Content Hub services, you will need to enable CORS (Cross-Origin Resource Sharing) in Watson Content Hub. You should only add domains that require access to the content and assets stored in your content hub, such as your web servers or your development environment. The domain format must be protocol://server:port where the protocol is either http or https, the server is either your server name or its IP address, and the port is the port number of your server. For example: http://my.domain.org:80. You can also use the "*" wildcard to enable CORS for any domain, though this isn't recommended from a security perspective.
 
+###Alternative Handlebars implementation
+
+There are two versions of the rendering implementation for this application. The first version (in index.html and app.js) builds up HTML by concatenating strings; the second version (in index-handlebars.html and app-handlebars.js) uses the Handlebars templating library. Otherwise the two implementations are the same. The Handlebars approach lets you avoid the string concatenation you see in app.js.
+
 ###Running the sample
 
 #### 1. Download the files
 
-Download the application files in the 'public' folder (index.html, app.js, and styles.css) into any folder on your workstation.
+Download the application files (html, js, and css) freom the 'public' folder into any folder on your workstation.
 
 #### 2. Update the user credentials
 

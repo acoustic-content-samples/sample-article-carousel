@@ -37,7 +37,7 @@ There are two versions of the rendering implementation for this application. The
 
 #### 1. Download the files
 
-Download the application files (html, js, and css) freom the 'public' folder into any folder on your workstation.
+Download the application files (html, js, and css) from the 'public' folder into any folder on your workstation.
 
 #### 2. Update the user credentials
 

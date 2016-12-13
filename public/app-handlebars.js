@@ -6,11 +6,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
-*/
+ */
 "use strict";
 
 // Base URLs and endpoints
-const wchLoginApiGateway  = "https://my.digitalexperience.ibm.com/api/";
+const wchLoginApiGateway = "https://my.digitalexperience.ibm.com/api/";
 const wchLoginURL = wchLoginApiGateway + "login/v1/basicauth";
 const searchService = "authoring/v1/search";
 
@@ -19,7 +19,7 @@ const username = "[username]";
 const password = "[password]";
 
 // search parameters for retrieving all content items of content type "Article"
-const searchParams = "q=*:*&wt=json&fq=type%3A%22Article%22&fq=classification:(content)&sort=lastModified%20desc";
+const searchParams = "q=*:*&fl=id,document&wt=json&fq=type%3A%22Article%22&fq=classification:(content)&sort=lastModified%20desc";
 
 function wchLogin() {
     var requestOptions = {
@@ -56,32 +56,34 @@ function showContent(baseTenantUrl) {
             var activeClass = indicators.length == 0 ? "active" : '';
             var activeItemClass = indicators.length == 0 ? "item active" : "item";
             // Get several element values for display
-            var imageResource = (elements.image.asset === undefined) ? "" : elements.image.asset.resourceUri ;
-            var title = (elements.title === undefined) ? "" : elements.title.value ;
-            var summary = (elements.summary === undefined) ? "" : elements.summary.value ;
-            var author = (elements.author === undefined) ? "" : elements.author.value ;
-            var publishDate = (elements.publishDate === undefined) ? "" : elements.publishDate.value ;
-            // generate the context for the handlebars template for this content item
-            indicators.push( { "activeClass": activeClass} );
-            contentItems.push( {
-                "activeItemClass": activeItemClass,
-                "resourceURI": baseTenantUrl + imageResource,
-                "title": title,
-                "summary": summary,
-                "author":  author,
-                "publishDate": publishDate
-            } );
+            var imageResource = (elements.image.asset === undefined) ? "" : elements.image.asset.resourceUri;
+            if (imageResource) {
+                var title = (elements.title === undefined) ? "" : elements.title.value;
+                var summary = (elements.summary === undefined) ? "" : elements.summary.value;
+                var author = (elements.author === undefined) ? "" : elements.author.value;
+                var publishDate = (elements.publishDate === undefined) ? "" : elements.publishDate.value;
+                // generate the context for the handlebars template for this content item
+                indicators.push({ "activeClass": activeClass });
+                contentItems.push({
+                    "activeItemClass": activeItemClass,
+                    "resourceURI": baseTenantUrl + imageResource,
+                    "title": title,
+                    "summary": summary,
+                    "author": author,
+                    "publishDate": publishDate
+                });
+            }
         });
 
         // update HTML for indicators and items
         var indicatorsScript = $("#indicatorsTemplate").html();
         var indicatorsTemplate = Handlebars.compile(indicatorsScript);
-        var compiledIndicatorsHTML = indicatorsTemplate({indicators});
+        var compiledIndicatorsHTML = indicatorsTemplate({ indicators });
         $("#articleCarouselIndicators").append(compiledIndicatorsHTML);
 
         var innerDivScript = $("#innerDivTemplate").html();
         var innerDivTemplate = Handlebars.compile(innerDivScript);
-        var compiledHTML = innerDivTemplate({contentItems});
+        var compiledHTML = innerDivTemplate({ contentItems });
         $("#articleCarouselInner").append(compiledHTML);
     });
 }

@@ -49,23 +49,7 @@ To avoid putting credentials in the source you could change the application to p
 
 This application requires that you have an "Article" content type available and one or more content items using that type.
 
-#####3a. Create the Article content type
-
-In the WCH user interface, under Content Model, Types, create an Article content type with the following elements. To set the "custom display" values, click on the little gear icon for the element.
-
-|Element name | Element type | Element custom display settings |
-| --- | --- | --- |
-|Title | Text | (none) |
-| Summary | Text | (none) |
-| Author | Text | (none) |
-| Body | Text | Multi line, Field width 100, Field height 10 |
-| Image | Image | (none) |
-| Publish Date | Date (Field type "Single date") | (none) |
-
-##### 3b. Create some sample content items using the Article content type
-
-Go to Content, My content and assets, and click the "Compose" link and select the "Article" type. Fill in all the fields. For the Image field, click "Upload" to upload an image from your file system. Repeat to add at least one more content item (to make the carousel interesting).
-
+Follow the instructions at the [sample-article-content](https://github.com/ibm-wch/sample-article-content) repository, to download and push the sample article type and associated authoring artifacts, for your content hub tenant.
 
 #### 4. Enable CORS support for your tenant
 

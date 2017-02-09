@@ -9,14 +9,18 @@
  */
 "use strict";
 
-// Base URLs and endpoints
-const wchLoginApiGateway = "https://my.digitalexperience.ibm.com/api/";
-const wchLoginURL = wchLoginApiGateway + "login/v1/basicauth";
-const searchService = "authoring/v1/search";
+// Base URL for APIs - replace {Host} and {Tenant ID} using the values available 
+// from the "i" information icon at the top left of the WCH screen 
+const baseTenantUrl = "https://{Host}/api/{Tenant ID}";
+
+// Services used for this sample
+const loginService = "/login/v1/basicauth";
+const searchService = "/authoring/v1/search";
 
 // Content Hub blueid username and password - replace these or add code to get these from inputs
 const username = "[username]";
 const password = "[password]";
+
 
 // search parameters for retrieving all content items of content type "Article"
 const searchParams = "q=*:*&fl=id,document&wt=json&fq=type%3A%22Article%22&fq=classification:(content)&sort=lastModified%20desc";
@@ -24,19 +28,17 @@ const searchParams = "q=*:*&fl=id,document&wt=json&fq=type%3A%22Article%22&fq=cl
 function wchLogin() {
     var requestOptions = {
         xhrFields: { withCredentials: true },
-        url: wchLoginURL,
+        url: baseTenantUrl + loginService,
         headers: { "Authorization": "Basic " + btoa(username + ":" + password) }
     };
     $.ajax(requestOptions).done(function(data, textStatus, request) {
-        var baseTenantUrl = request.getResponseHeader('x-ibm-dx-tenant-base-url'); // use this to get tenant from the basicauth call
-        // console.log('baseTenantUrl: ', baseTenantUrl);
-        showContent(baseTenantUrl);
+        showContent();
     }).fail(function(request, textStatus, err) {
         alert("Content Hub Login returned an error: " + err);
     });
 }
 
-function showContent(baseTenantUrl) {
+function showContent() {
     var searchURL = baseTenantUrl + '/' + searchService + "?" + searchParams;
     var reqOptions = {
         xhrFields: { withCredentials: true },

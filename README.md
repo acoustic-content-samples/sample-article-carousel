@@ -11,17 +11,9 @@ This sample shows:
 
 The initial set of APIs provided by Watson Content Hub are for authoring services, which require authentication and are not optimized for retrieval by applications in production. Follow-on releases will provide "delivery" services which can be accessed anonymously and are optimized for caching and performance. However, the two APIs will be very similar, so to switch from authoring to delivery services you will just need to change the "authoring" portion of the service URL to "delivery." 
 
-### About authentication and tenant handling
+### About authentication
 
 To call authenticated APIs, you need to first call the login service with the desired user name and password. This will return tenant information and an authentication token cookie for use on subsequent calls. The browser will include the authentication token cookie in subsequent requests. 
-
-The login call will return both a tenant ID and a tenant base URL in the response header. The tenant ID needs to be part of the URL for subsequent API calls. For example, the search service will have a URL like this:
-
-https://my.digitalexperience.ibm.com/api/[tenantID]/authoring/v1/search
-
-Typically you will use the base URL from the x-ibm-dx-tenant-base-url header to construct the service URL with the tenant ID. This is what's done in the sample code. An alternative approach is to obtain the tenant ID from the Watson Content Hub user interface. Click on the "i" information icon at the top left next to where it says "IBM Watson Content Hub" and you will see your tenant ID.
-
-Once you have the authentication token and have built the complete API link that includes the tenant ID, you can call any of the authenticated APIs by appending the specific API route for the service you want. This example calls the search service by appending "/authoring/v1/search" to the base URL.
 
 Note that every API service operation has specific user roles that it can be used with. In the API Explorer (see link below under resources) you can see the user roles for all operations.
 
@@ -39,13 +31,15 @@ There are two versions of the rendering implementation for this application. The
 
 Download the application files (html, js, and css) from the 'public' folder into any folder on your workstation.
 
-#### 2. Update the user credentials
+#### 2. Update the user credentials and baseTenantUrl
 
-This sample uses hard-coded user name and password set in the app.js file. Update the name and password values in that file.
+This sample uses a hard-coded user name and password set in the app.js and app-handlebars.js files. Update the name and password values in those files. To avoid putting credentials in the source you could change the application to provide browser inputs for username and password.
 
-To avoid putting credentials in the source you could change the application to provide browser inputs for username and password. Also, as noted above, future Watson Content Hub releases will have support for "delivery" APIs that can be available without login.
+The baseTenantUrl variable in app.js and app-handlebars.js must also be set for your tenant. In the IBM Watson Content Hub user interface, click the "i" information icon at the top left of the screen next to where it says IBM Watson Content Hub. The pop-up window shows your host and tenant ID. Use this information to update the value of baseTenantUrl. For example it might look something like this:
 
-####3. Create an "Article" content type with some content items
+const baseTenantUrl = "https://my12.digitalexperience.ibm.com/api/12345678-9abc-def0-1234-56789abcdef0";
+
+#### 3. Create an "Article" content type with some content items
 
 This application requires that you have an "Article" content type available and one or more content items using that type.
 

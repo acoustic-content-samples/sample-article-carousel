@@ -12,30 +12,13 @@
 // Base URL for APIs - replace {Host} and {Tenant ID} using the values available 
 // from the "i" information icon at the top left of the WCH screen 
 const baseTenantUrl = "https://{Host}/api/{Tenant ID}";
+const serverBaseUrl = "https://{Host}";
 
 // Services used for this sample
-const loginService = "/login/v1/basicauth";
-const searchService = "/authoring/v1/search";
-
-// Content Hub blueid username and password - replace these or add code to get these from inputs
-const username = "[username]";
-const password = "[password]";
+const searchService = "/delivery/v1/search";
 
 // search parameters for retrieving all content items of content type "Article"
 const searchParams = "q=*:*&fl=id,document&wt=json&fq=type%3A%22Article%22&fq=classification:(content)&sort=lastModified%20desc";
-
-function wchLogin() {
-    var requestOptions = {
-        xhrFields: { withCredentials: true },
-        url: baseTenantUrl + loginService,
-        headers: { "Authorization": "Basic " + btoa(username + ":" + password) }
-    };
-    $.ajax(requestOptions).done(function(data, textStatus, request) {
-        showContent();
-    }).fail(function(request, textStatus, err) {
-        alert("Content Hub Login returned an error: " + err);
-    });
-}
 
 function showContent() {
     var searchURL = baseTenantUrl + searchService + "?" + searchParams;
@@ -57,7 +40,7 @@ function showContent() {
             var activeClass = indicators.length == 0 ? ' class="active"' : '';
             var activeItemClass = indicators.length == 0 ? ' class="item active"' : ' class="item"';
             // Get several element values for display
-            var imageResource = (elements.image.asset === undefined) ? "" : elements.image.asset.resourceUri;
+            var imageResource = serverBaseUrl + "/" + elements.image.url;
             if (imageResource) {
                 var title = (elements.title === undefined) ? "" : elements.title.value;
                 var summary = (elements.summary === undefined) ? "" : elements.summary.value;
@@ -66,7 +49,7 @@ function showContent() {
                 // generate the HTML for this content item
                 indicators.push('<li data-target="#articleCarousel" data-slide-to="0"' + activeClass + '></li>');
                 innerItems.push('' + '<div ' + activeItemClass + '>' + '<img class="carousel-image" ' 
-                    + 'src="' + baseTenantUrl + imageResource + '" ' + 'width="460" height="345">' + '<div class="carousel-caption">' + '<h1>' + title + '</h1>' + '<p>' + summary + '</p>' + '<h4>' + author + '</h5>' + '</div>' + '</div>'
+                    + 'src="' + imageResource + '" ' + 'width="460" height="345">' + '<div class="carousel-caption">' + '<h1>' + title + '</h1>' + '<p>' + summary + '</p>' + '<h4>' + author + '</h5>' + '</div>' + '</div>'
 
                 );
             }
@@ -78,5 +61,5 @@ function showContent() {
     });
 }
 $(document).ready(function() {
-    wchLogin();
+    showContent();
 });

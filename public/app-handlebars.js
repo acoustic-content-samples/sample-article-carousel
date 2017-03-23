@@ -9,9 +9,10 @@
  */
 "use strict";
 
-// Base URL for APIs - replace {Host} and {Tenant ID} using the values available 
-// from the "i" information icon at the top left of the WCH screen 
-const baseTenantUrl = "https://{Host}/api/{Tenant ID}";
+// The API URL, along with the host and content hub id for your tenant, may be
+// found in the "Hub Information" dialog off the "User menu" in the authoring UI
+// Update the following two URLs with values from that Hub Information dialog.
+const baseTenantAPIURL = "https://{Host}/api/{Tenant ID}";
 const serverBaseUrl = "https://{Host}";
 
 // Services used for this sample
@@ -22,7 +23,7 @@ const searchService = "/delivery/v1/search";
 const searchParams = "q=*:*&fl=id,document&wt=json&fq=type%3A%22Article%22&fq=classification:(content)&sort=lastModified%20desc";
 
 function showContent() {
-    var searchURL = baseTenantUrl + '/' + searchService + "?" + searchParams;
+    var searchURL = baseTenantAPIURL + '/' + searchService + "?" + searchParams;
     var reqOptions = {
         xhrFields: { withCredentials: true },
         dataType: "json",

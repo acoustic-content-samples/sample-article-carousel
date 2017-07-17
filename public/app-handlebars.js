@@ -1,5 +1,5 @@
 /*
- * Copyright 2016  IBM Corp.
+ * Copyright IBM Corp. 2016, 2017
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -20,7 +20,7 @@ const searchService = "/delivery/v1/search";
 
 
 // search parameters for retrieving all content items of content type "Article"
-const searchParams = "q=*:*&fl=id,document&wt=json&fq=type%3A%22Article%22&fq=classification:(content)&sort=lastModified%20desc";
+const searchParams = "q=*:*&fl=id,document&wt=json&fq=type%3A(Article OR %22Sample Article%22)&fq=classification:(content)&sort=lastModified%20desc";
 
 function showContent() {
     var searchURL = baseTenantAPIURL + '/' + searchService + "?" + searchParams;

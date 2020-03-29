@@ -1,5 +1,5 @@
 # sample-article-carousel
-This sample web application illustrates how to call IBM Watson Content Hub APIs from client JavaScript. The application uses jQuery and Bootstrap to display a carousel showing a list of articles with images from Watson Content Hub.
+This sample web application illustrates how to call Acoustic Content (formerly Watson Content Hub) APIs from client JavaScript. The application uses jQuery and Bootstrap to display a carousel showing a list of articles with images from Acoustic Content.
 
 This sample shows:
 * Using the powerful search API to retrieve a list of content items for a specific content type.

@@ -20,11 +20,11 @@ Download the application files (html, js, and css) from the 'public' folder into
 
 The baseTenantUrl and serverBaseUrl variables in app.js and app-handlebars.js must also be set for your tenant. In the IBM Watson Content Hub user interface, open the "Hub Information" dialog from the "About" flyout menu off the left navigation pane.  The pop-up window shows your Watson Content Hub tenant specific "API URL". Use this information to update the value of baseTenantUrl in the above mentioned JS files.  For example it might look something like this:
 
-const baseTenantUrl = "https://my12.digitalexperience.ibm.com/api/12345678-9abc-def0-1234-56789abcdef0";
+const baseTenantUrl = "https://content-eu-4.content-cms.com/api/12345678-9abc-def0-1234-56789abcdef0";
 
 The serverBaseUrl will include just the first part of that, similar to this:
 
-const serverBaseUrl = "https://my12.digitalexperience.ibm.com";
+const serverBaseUrl = "https://content-eu-4.content-cms.com";
 
 
 #### 3. Upload sample "Article" content
